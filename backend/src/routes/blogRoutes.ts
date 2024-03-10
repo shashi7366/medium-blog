@@ -54,7 +54,7 @@ api.post("/", async (c) => {
         });
 
         c.status(200);
-        return c.json({message:"post added successfully"});
+        return c.json({message:"post added successfully",id:[post.id]});
     }catch(exp:any){
         return c.json({error:exp.message});
     }
@@ -97,6 +97,9 @@ api.post("/", async (c) => {
         const post=await prisma.post.findUnique({
             where:{
                 id:id
+            },
+            include:{
+                author:{select:{name:true}}
             }
         });
 
@@ -116,7 +119,15 @@ api.post("/", async (c) => {
 
        
 
-        const posts=await prisma.post.findMany({});
+        const posts=await prisma.post.findMany({
+            include:{
+                author:{
+                    select:{
+                        name:true
+                    }
+                }
+            }
+        });
         
         console.log("hi");
 

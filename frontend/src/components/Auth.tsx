@@ -4,7 +4,7 @@ import Input from "./Input";
 import Heading from "./Heading";
 import ButtonFullWidth from "./ButtonFullWidth";
 
-import {signup} from "../utils/ApiRoutes";
+import {signup,signin} from "../utils/ApiRoutes";
 import { useNavigate } from "react-router-dom";
 
 
@@ -14,7 +14,7 @@ interface formDataType {
     password: string
 }
 
-function Auth() {
+function Auth({type}:{type:string}) {
 
     const [formData, setFormData] = useState<formDataType>({
         username: "",
@@ -25,29 +25,39 @@ function Auth() {
     const navigate=useNavigate();
 
     function onClickHandler(){
-        fetch(signup,{
+        let data={};
+
+        if(type=="signin"){
+            data={email:formData.email,password:formData.password}
+        }else{
+            data={name:formData.username,email:formData.email,password:formData.password}
+        }
+
+        const path=type=="signin"?signin:signup;
+
+        fetch(path,{
             method:"POST",
             headers:{
                 "content-type":"application/json"
             },
-            body:JSON.stringify({email:formData.email,password:formData.password})
+            body:JSON.stringify(data)
         }).then(res=>{
             return res.json();
         })
         .then(data=>{
             
-            localStorage.setItem('medium-blog',`Bearer ${data.token}`);
-            navigate("/blog/1");
+            localStorage.setItem('medium-blog',`${data.token}`);
+            navigate("/blogs");
         })
     }
 
     return <div className="w-full h-screen flex justify-center items-center">
         <div className="w-[90%] lg:w-[50%]">
-            <Heading heading="Create an Account" />
-            <div className="text-gray-400 text-lg font-normal w-full text-center">Already have an account?<Link to="/signin">Sign In</Link></div>
-            <Input placeholder="" type="text" label="Username" onChange={(e)=>{
+            <Heading heading={type=="signin"?'Sign In':"Create an Account"} />
+            <div className="text-gray-400 text-lg font-normal w-full text-center">{type=="signin"?"Don't have an account? ":"Already have an account?"}<Link to={type=="signin"?"/signup":"signin"}>{type=="signin"?"Sign Up":"Sign In"}</Link></div>
+            {type!="signin"?<Input placeholder="" type="text" label="Username" onChange={(e)=>{
                 setFormData({...formData,username:e.target.value})
-            }}/>
+            }}/>:null}
             <Input placeholder="email" type="email" label="Email" onChange={(e)=>{
                 setFormData({...formData,email:e.target.value})
             }}/>
@@ -55,7 +65,7 @@ function Auth() {
             onChange={(e)=>{
                 setFormData({...formData,password:e.target.value})
             }} />
-            <ButtonFullWidth text="Sign Up" onClick={onClickHandler}/>
+            <ButtonFullWidth text={type=="signin"?"Sign In":"Sign Up"} onClick={onClickHandler}/>
         </div>
     </div>
 }

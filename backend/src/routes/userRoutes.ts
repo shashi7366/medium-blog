@@ -23,13 +23,14 @@ api.post("/signup", async (c) => {
       const user = await prisma.user.create({
         data: {
           email: body.email,
-          password: body.password
+          password: body.password,
+          name:body.name
         }
       });
   
       const jwt = await sign({ userId: user.id }, c.env.JWT_SECRET);
   
-      return c.json({ message: "signup successful", token: jwt });
+      return c.json({ message: "signup successful", token: `Bearer ${jwt}` });
     } catch (exp: any) {
       c.status(500);
       return c.text(exp.message);
