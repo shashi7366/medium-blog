@@ -1,11 +1,10 @@
 import Appbar from "../components/Appbar";
 import BlogCard from "../components/BlogCard";
-
-import { useEffect, useState } from "react";
-import {allBlogs} from "../utils/ApiRoutes"
 import BlogsSkelton from "../components/skeltons/BlogsSkelton";
-import { useRecoilValue, useRecoilValueLoadable } from "recoil";
-import { currentUser } from "../store/currentUserAtom";
+import {  useRecoilValueLoadable } from "recoil";
+import { allBlogsAtom } from "../store/currentUserAtom";
+
+
 
 interface User{
     name:string | null
@@ -20,8 +19,10 @@ interface blog{
 
 function Blogs(){
 
+    
+
    // const [blogss,setBlogss]=useState<blog[]>();
-   const blogss=useRecoilValueLoadable(currentUser);
+   const blogss=useRecoilValueLoadable(allBlogsAtom);
    // const [loading,setLoading]=useState(true)
 
     // useEffect(()=>{
@@ -86,6 +87,7 @@ function Blogs(){
 
     return <div className="w-full flex flex-col items-center">
         <Appbar/>
+        
         {blogss.state=='hasValue' && blogss.contents.map((blog:{title:string,content:string,id:string,author:{name:string}},index:number)=>{
             return <BlogCard key={index} title={blog.title} description={blog.content} authorName={blog.author.name} time={'Dec 3,2023'} id={blog.id}/>
         })}

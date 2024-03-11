@@ -1,5 +1,5 @@
 import {Hono} from "hono";
-import {sign} from "hono/jwt"
+import {sign, verify} from "hono/jwt"
 
 
 
@@ -70,6 +70,39 @@ api.post("/signup", async (c) => {
       return c.json({ message: exp.message });
     }
   });
+
+
+  api.post("/",async (c)=>{
+
+    try{
+      //@ts-ignore
+      const prisma=c.get("prisma");
+      let payload=await c.req.json();
+
+      console.log(payload+"hi");
+
+      const token=(payload.token).split(" ")[1];
+
+      let user=await verify(token,c.env.JWT_SECRET);
+
+      user=user.userId;
+
+     const res=await  prisma.user.findUnique({
+        where:{id:user}
+      });
+
+      if(res){
+        c.status(200);
+       return c.json({user:res});
+      }else{
+        throw new Error();
+      }
+    }
+    catch(exp){
+      c.status(404);
+      return c.json({message:"invalid token"})
+    }
+  })
 
 
   export default api;

@@ -9,10 +9,10 @@ import {allBlogs} from "../utils/ApiRoutes";
 // })
 
 
-export const currentUser=atom({
-    key:"currentUser",
+export const allBlogsAtom=atom({
+    key:"allBlogs",
     default:selector({
-        key:"currentUserAsyncSelector",
+        key:"allBlogsAsyncSelector",
         get:async ()=>{
             let data=await fetch(allBlogs,{
                 method:"POST",
@@ -29,3 +29,12 @@ export const currentUser=atom({
         }
     })
 });
+
+
+export const currentUser=atom({
+    key:"currentUser",
+    default:{
+        id:"",
+        name:"Anonymous"
+    }
+})

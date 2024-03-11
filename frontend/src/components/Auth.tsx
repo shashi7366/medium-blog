@@ -47,14 +47,14 @@ function Auth({type}:{type:string}) {
         .then(data=>{
             
             localStorage.setItem('medium-blog',`${data.token}`);
-            navigate("/blogs");
+            navigate("/");
         })
     }
 
     return <div className="w-full h-screen flex justify-center items-center">
         <div className="w-[90%] lg:w-[50%]">
             <Heading heading={type=="signin"?'Sign In':"Create an Account"} />
-            <div className="text-gray-400 text-lg font-normal w-full text-center">{type=="signin"?"Don't have an account? ":"Already have an account?"}<Link to={type=="signin"?"/signup":"signin"}>{type=="signin"?"Sign Up":"Sign In"}</Link></div>
+            <div className="text-gray-400 text-lg font-normal w-full text-center">{type=="signin"?"Don't have an account? ":"Already have an account?"}<Link to={type=="signin"?"/signup":"/signin"}>{type=="signin"?"Sign Up":"Sign In"}</Link></div>
             {type!="signin"?<Input placeholder="" type="text" label="Username" onChange={(e)=>{
                 setFormData({...formData,username:e.target.value})
             }}/>:null}
