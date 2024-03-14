@@ -6,15 +6,7 @@ import { allBlogsAtom } from "../store/currentUserAtom";
 
 
 
-interface User{
-    name:string | null
-}
-interface blog{
-    id:string,
-    title:string,
-    content:string,
-    author:User
-}
+
 
 
 function Blogs(){
@@ -47,30 +39,7 @@ function Blogs(){
     //     })
     // },[]);
 
-    const blogs=[
-        {
-            title:"How an Ugly Single-Page Websites Makes $5,000 a Months with Affiliates Marketing",
-            description:"How an Ugly Single-Page Websites Makes $5,000 a Months with Affiliates MarketingHow an Ugly Single-Page Websites Makes $5,000 a Months with Affiliates Marketing",
-            authorName:"Peter V.",
-            time:"Dec 3,2023",
-            id:"1"
-        },
-        {
-            title:"How an Ugly Single-Page Websites Makes $5,000 a Months with Affiliates Marketing",
-            description:"How an Ugly Single-Page Websites Makes $5,000 a Months with Affiliates MarketingHow an Ugly Single-Page Websites Makes $5,000 a Months with Affiliates Marketing",
-            authorName:"Peter V.",
-            time:"Dec 3,2023",
-            id:"1"
-        },
-        {
-            title:"How an Ugly Single-Page Websites Makes $5,000 a Months with Affiliates Marketing",
-            description:"How an Ugly Single-Page Websites Makes $5,000 a Months with Affiliates MarketingHow an Ugly Single-Page Websites Makes $5,000 a Months with Affiliates Marketing",
-            authorName:"Peter V.",
-            time:"Dec 3,2023",
-            id:"1"
-        }
-
-    ]
+    
 
     console.log(blogss);
 

@@ -84,7 +84,7 @@ api.post("/signup", async (c) => {
       const token=(payload.token).split(" ")[1];
 
       let user=await verify(token,c.env.JWT_SECRET);
-
+console.log(user);
       user=user.userId;
 
      const res=await  prisma.user.findUnique({
@@ -99,7 +99,7 @@ api.post("/signup", async (c) => {
       }
     }
     catch(exp){
-      c.status(404);
+      c.status(403);
       return c.json({message:"invalid token"})
     }
   })

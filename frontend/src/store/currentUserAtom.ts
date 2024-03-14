@@ -1,5 +1,6 @@
 import {atom,selector} from "recoil";
-import {allBlogs} from "../utils/ApiRoutes";
+import {allBlogs,meRoute} from "../utils/ApiRoutes";
+import axios from "axios";
 
 
 
@@ -37,4 +38,23 @@ export const currentUser=atom({
         id:"",
         name:"Anonymous"
     }
+});
+
+
+export const currentUserAsync=atom({
+    key:"currentUserAsync",
+    default:selector({
+        key:"currentUserAsync selector",
+        get:async ()=>{
+
+           const token=localStorage.getItem('medium-blog');
+
+           let res=await axios.post(meRoute,{token:token});
+
+            console.log(res.data);
+           
+            return res.data.user;
+
+        }
+    })
 })

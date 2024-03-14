@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {meRoute} from "../utils/ApiRoutes";
 import {useSetRecoilState} from "recoil";
@@ -33,11 +33,11 @@ function Me(){
             })
             .catch(err=>{
                 console.log(err);
-                navigate("/signup");
+                navigate("/signin");
             })
 
         }else{
-            navigate("/signup");
+            navigate("/signin");
         }
     },[])
 

@@ -1,19 +1,25 @@
 import {Avatar} from "./BlogCard";
 import {useNavigate} from "react-router-dom";
-import {useRecoilValue} from "recoil";
-import { currentUser } from "../store/currentUserAtom";
+import {useRecoilValueLoadable} from "recoil";
+import { currentUserAsync } from "../store/currentUserAtom";
 import {useState} from "react"
 
 function Appbar(){
 
 
-    let user=useRecoilValue(currentUser);
+    let user=useRecoilValueLoadable(currentUserAsync);
 
     let [show,setShow]=useState(false);
 
     const navigate=useNavigate();
-    
-    let name=user.name;
+
+    let name="Anonymous";
+
+    if(user.state=='hasValue'){
+        if(user.contents.name!=null){
+            name=user.contents.name;
+        }
+    }
 
     
 
